@@ -1,8 +1,8 @@
-export default function Input() {
+export default function Input({ label, isTextArea = false, ...props }) {
   return (
     <p>
-      <label>Title</label>
-      <input />
+      <label>{label}</label>
+      {isTextArea ? <textarea {...props} /> : <input {...props} />}
     </p>
   );
 }
