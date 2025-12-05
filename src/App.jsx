@@ -10,7 +10,7 @@ function App() {
     projects: [],
   });
 
-  // selecting project
+  // SELECTING A PROJECT
   function handleSelectProject(id) {
     setProjectsStates((prevState) => {
       return {
@@ -20,6 +20,7 @@ function App() {
     });
   }
 
+  // HANDLE SWITCHING TO COMPONENT TO PUT IN INFORMATION TO ADD PROJECT
   function handleStartAddProject() {
     setProjectsStates((prevState) => {
       return {
@@ -29,6 +30,7 @@ function App() {
     });
   }
 
+  // ADDING A NEW PROJECT TO ARRAY
   function handleAddProject(projectData) {
     setProjectsStates((prevState) => {
       const newProject = {
@@ -43,11 +45,27 @@ function App() {
     });
   }
 
+  // DELETE A PROJECT WHILE EDITING IT
+  function handleDeleteProject() {
+    setProjectsStates((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: prevState.projects.filter(
+          (project) => project.id !== prevState.selectedProjectId
+        ),
+      };
+    });
+  }
+
+  // FIND SELECTED PROJECT
   const selectedProject = projectsState.projects.find(
     (project) => project.id === projectsState.selectedProjectId
   );
 
-  let content = <SelectedProject project={selectedProject} />;
+  let content = (
+    <SelectedProject project={selectedProject} onDelete={handleDeleteProject} />
+  );
 
   // adding a new project
   if (projectsState.selectedProjectId === null) {
@@ -58,6 +76,7 @@ function App() {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
+  // CANCEL PROJECT WHILE CREATING IT
   function handleCancelAddProject() {
     setProjectsStates((prevState) => {
       return {
